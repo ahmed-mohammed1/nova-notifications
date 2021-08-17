@@ -51,6 +51,7 @@
                 count: 0,
                 notifications: [],
                 isLoading: true,
+                sound: Nova.config.default_sound,
             }
         },
         mounted() {
@@ -79,6 +80,11 @@
                             callback(response)
                         }
                     })
+            },
+            playSound: function (sound = this.sound) {
+                if(Nova.config.play_sound){
+                  new Audio(sound).play();
+                }
             },
             notificationReceived: function (notification) {
                 const self = this
@@ -124,6 +130,8 @@
                     iconPack: 'custom-class',
                     action: actions,
                 })
+
+                this.playSound(notification.sound)
             },
             markAllAsRead: function () {
                 axios
